@@ -1,5 +1,5 @@
 ---
-- name: Configure homelab
+- name: Configure sandbox
   hosts: all
   become: true
 
