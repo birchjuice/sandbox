@@ -1,0 +1,6 @@
+---
+- name: Configure homelab
+  hosts: all
+  become: true
+
+  roles: []
