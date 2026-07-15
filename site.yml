@@ -2,5 +2,7 @@
 - name: Configure sandbox
   hosts: all
   become: true
-
-  roles: []
+  gather_facts: true
+  
+  roles:
+    - common
