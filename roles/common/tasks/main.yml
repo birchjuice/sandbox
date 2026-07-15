@@ -1,4 +1,15 @@
-- name: Ensure /tmp exists
-  ansible.builtin.file:
-    path: /tmp
-    state: directory
+- name: Set timezone
+  timezone:
+    name: "{{ timezone }}"
+
+- name: Update package cache and upgrade packages
+  apt:
+    update_cache: true
+    upgrade: dist
+    autoremove: true
+    autoclean: true
+
+- name : Install common packages
+  package:
+    name: "{{ common_packages }}"
+    state: present
