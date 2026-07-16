@@ -5,12 +5,36 @@ ansible_become_password: !vault |
           35316262626233646534353338346365623035373339656135393739666431626637353435333563
           6361326433336536360a373733336332613338303764376337313739336263313463346266306432
           6537
+
 ansible_python_interpreter: /usr/bin/python3
-company_root: /company
-timezone: Europe/Tallinn
+
 common_packages:
   - git
   - vim
   - curl
   - htop
   - tree
+  - acl
+
+company_directories:
+  - name: public
+    group: public
+    mode: "0555"
+
+  - name: hr
+    group: hr
+    mode: "2770"
+
+  - name: it
+    group: it
+    mode: "2770"
+
+  - name: mngt
+    group: mngt
+    mode: "2770"
+
+company_acls:
+  - path: /company/hr
+    entity: mngt
+    etype: group
+    permissions: rx

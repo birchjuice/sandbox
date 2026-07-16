@@ -1,4 +1,3 @@
----
 - name: Configure sandbox
   hosts: all
   become: true
@@ -6,3 +5,4 @@
   
   roles:
     - common
+    - storage

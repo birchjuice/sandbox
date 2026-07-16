@@ -1,15 +1,23 @@
 - name: Set timezone
   timezone:
-    name: "{{ timezone }}"
+    name: "Europe/Tallinn"
 
-- name: Update package cache and upgrade packages
+- name: Update packages
   apt:
     update_cache: true
     upgrade: dist
     autoremove: true
     autoclean: true
 
-- name : Install common packages
+- name: Install packages
   package:
     name: "{{ common_packages }}"
     state: present
+
+- name: Deploy MOTD
+  template:
+    src: motd.j2
+    dest: /etc/motd
+    owner: root
+    group: root
+    mode: '0644'

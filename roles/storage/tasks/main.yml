@@ -1,0 +1,23 @@
+- name: Create company groups
+  group:
+    name: "{{ item.group }}"
+    state: present
+  loop: "{{ company_directories }}"
+
+- name: Create company directories
+  file:
+    path: "/company/{{ item.name }}"
+    state: directory
+    owner: root
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  loop: "{{ company_directories }}"
+
+- name: Configure ACLs
+  acl:
+    path: "{{ item.path }}"
+    entity: "{{ item.entity }}"
+    etype: "{{ item.etype }}"
+    permissions: "{{ item.permissions }}"
+    state: present
+  loop: "{{ company_acls }}"
