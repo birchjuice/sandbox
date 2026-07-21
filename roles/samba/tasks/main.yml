@@ -12,7 +12,7 @@
     mode: '0644'
   notify: Restart Samba
 
-- name: Ensure Samba is enabled
+- name: Enable and start Samba
   service:
     name: smbd
     state: started

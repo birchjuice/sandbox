@@ -1,0 +1,72 @@
+- name: Remove conflicting packages
+  apt:
+    name:
+      - docker.io
+      - docker-compose
+      - docker-compose-v2
+      - podman-docker
+      - containerd
+      - runc
+    state: absent
+
+- name: Install Docker prerequisites
+  apt:
+    name:
+      - ca-certificates
+      - gnupg
+    state: present
+    update_cache: true
+
+- name: Create apt keyrings directory
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: Download Docker GPG key
+  get_url:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    dest: /etc/apt/keyrings/docker.asc
+    mode: '0644'
+
+- name: Add Docker repository
+  deb822_repository:
+    name: docker
+    types: deb
+    uris: https://download.docker.com/linux/ubuntu
+    suites: "{{ ansible_facts['distribution_release'] }}"
+    components: stable
+    architectures: amd64
+    signed_by: /etc/apt/keyrings/docker.asc
+
+- name: Install Docker Engine
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - docker-buildx-plugin
+      - docker-compose-plugin
+      - containerd.io
+    state: present
+    update_cache: true
+
+- name: Configure Docker daemon
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Docker
+
+- name: Enable and start Docker
+  systemd:
+    name: docker
+    enabled: true
+    state: started
+
+- name: Add user to Docker group
+  user:
+    name: alex
+    groups: docker
+    append: true

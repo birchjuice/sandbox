@@ -11,10 +11,13 @@
       tags: [st]
 
     - role: kerberos
-      tags: [k]
+      tags: [ker]
 
     - role: domain
-      tags: [d]
+      tags: [dom]
 
     - role: samba
       tags: [smb]
+
+    - role: docker
+      tags: [doc]
