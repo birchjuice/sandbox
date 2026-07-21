@@ -17,7 +17,10 @@
       tags: [dom]
 
     - role: samba
-      tags: [smb]
+      tags: [sam]
 
     - role: docker
       tags: [doc]
+
+    - role: gitea
+      tags: [git]

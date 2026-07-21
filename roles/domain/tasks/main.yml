@@ -21,11 +21,6 @@
   when: "'lab.local' not in realm_status.stdout"
   no_log: true
 
-- name: Verify domain join
-  command: realm list
-  register: realm_verify
-  changed_when: false
-
 - name: Set directory ownership
   file:
     path: "{{ item.path }}"

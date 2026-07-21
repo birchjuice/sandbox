@@ -15,7 +15,6 @@
       - ca-certificates
       - gnupg
     state: present
-    update_cache: true
 
 - name: Create apt keyrings directory
   file:
@@ -48,7 +47,6 @@
       - docker-compose-plugin
       - containerd.io
     state: present
-    update_cache: true
 
 - name: Configure Docker daemon
   template:

@@ -2,14 +2,12 @@
   timezone:
     name: "Europe/Tallinn"
 
-- name: Update packages
+- name: Update apt cache
   apt:
     update_cache: true
-    upgrade: dist
-    autoremove: true
-    autoclean: true
+    cache_valid_time: 86400
 
-- name: Install packages
+- name: Install common packages
   package:
     name: "{{ common_packages }}"
     state: present

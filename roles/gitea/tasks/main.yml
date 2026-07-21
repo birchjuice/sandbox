@@ -1,0 +1,32 @@
+- name: Create Gitea directory
+  file:
+    path: /opt/gitea
+    state: directory
+    mode: '0755'
+
+- name: Create Gitea data directory
+  file:
+    path: /opt/gitea/data
+    state: directory
+    mode: '0755'
+
+- name: Configure Gitea compose file
+  template:
+    src: compose.yml.j2
+    dest: /opt/gitea/compose.yml
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Gitea
+
+- name: Start Gitea
+  command: docker compose up -d
+  args:
+    chdir: /opt/gitea
+  changed_when: false
+
+- name: Create MariaDB directory
+  file:
+    path: /opt/gitea/db
+    state: directory
+    mode: '0755'
