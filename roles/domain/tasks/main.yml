@@ -1,0 +1,34 @@
+- name: Install domain packages
+  package:
+    name: "{{ domain_packages }}"
+    state: present
+
+- name: Check if domain is already joined
+  command: realm list
+  register: realm_status
+  changed_when: false
+
+- name: Join LAB.LOCAL
+  expect:
+    command: >
+      realm join
+      --membership-software=samba
+      --client-software=winbind
+      lab.local
+      -U {{ domain_admin_user }}
+    responses:
+      'Password for .*:': "{{ domain_admin_password }}"
+  when: "'lab.local' not in realm_status.stdout"
+  no_log: true
+
+- name: Verify domain join
+  command: realm list
+  register: realm_verify
+  changed_when: false
+
+- name: Set directory ownership
+  file:
+    path: "{{ item.path }}"
+    owner: root
+    group: "{{ item.group }}"
+  loop: "{{ domain_directory_ownership }}"

@@ -1,0 +1,18 @@
+[libdefaults]
+    default_realm = LAB.LOCAL
+    dns_lookup_realm = false
+    dns_lookup_kdc = true
+    kdc_timesync = 1
+    rdns = false
+    ticket_lifetime = 24h
+    forwardable = true
+    udp_preference_limit = 0
+
+[realms]
+    LAB.LOCAL = {
+        default_domain = lab.local
+    }
+
+[domain_realm]
+    .lab.local = LAB.LOCAL
+    lab.local = LAB.LOCAL

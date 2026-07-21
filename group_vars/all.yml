@@ -6,6 +6,15 @@ ansible_become_password: !vault |
           6361326433336536360a373733336332613338303764376337313739336263313463346266306432
           6537
 
+domain_admin_user: Administrator
+domain_admin_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          65376462613764333836363437623039376438303931323164323864636261303362346136303434
+          3239613932333137343863616132313464366363393662650a613133303832323432663334343538
+          35653231613134643536363462303435343361343432343336306134636133356437383638653738
+          3131303363373436380a633130663538643834326633626235336639623830663437333939306637
+          6464
+
 ansible_python_interpreter: /usr/bin/python3
 
 common_packages:
@@ -16,25 +25,42 @@ common_packages:
   - tree
   - acl
 
+domain_packages:
+  - realmd
+  - adcli
+  - winbind
+  - libnss-winbind
+  - libpam-winbind
+  - packagekit
+
 company_directories:
   - name: public
-    group: public
-    mode: "0555"
-
-  - name: hr
-    group: hr
-    mode: "2770"
-
-  - name: it
-    group: it
-    mode: "2770"
+    mode: '0555'
 
   - name: mngt
-    group: mngt
-    mode: "2770"
+    mode: '2770'
+
+  - name: hr
+    mode: '2770'
+
+  - name: it
+    mode: '2770'
 
 company_acls:
   - path: /company/hr
-    entity: mngt
+    entity: 'LAB\gg_management'
     etype: group
     permissions: rx
+
+domain_directory_ownership:
+  - path: /company/public
+    group: 'LAB\gg_allemployees'
+
+  - path: /company/mngt
+    group: 'LAB\gg_management'
+
+  - path: /company/hr
+    group: 'LAB\gg_hr'
+
+  - path: /company/it
+    group: 'LAB\gg_it'

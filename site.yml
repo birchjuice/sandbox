@@ -1,8 +1,20 @@
 - name: Configure sandbox
-  hosts: all
+  hosts: test01
   become: true
   gather_facts: true
   
   roles:
-    - common
-    - storage
+    - role: common
+      tags: [c]
+
+    - role: storage
+      tags: [st]
+
+    - role: kerberos
+      tags: [k]
+
+    - role: domain
+      tags: [d]
+
+    - role: samba
+      tags: [smb]

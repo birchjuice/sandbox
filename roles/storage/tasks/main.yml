@@ -1,6 +1,6 @@
 - name: Create company groups
   group:
-    name: "{{ item.group }}"
+    name: "{{ item.name }}"
     state: present
   loop: "{{ company_directories }}"
 
@@ -9,7 +9,6 @@
     path: "/company/{{ item.name }}"
     state: directory
     owner: root
-    group: "{{ item.group }}"
     mode: "{{ item.mode }}"
   loop: "{{ company_directories }}"
 
