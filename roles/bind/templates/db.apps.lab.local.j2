@@ -1,0 +1,12 @@
+$TTL    604800
+@       IN      SOA     ns1.apps.lab.local.  admin.apps.lab.local. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      ns1.apps.lab.local.
+ns1     IN      A       {{ bind_server_ip }}
+{{ bind_server_name }}  IN  A  {{ bind_server_ip }}
+gitea   IN      CNAME   {{ bind_server_name }}.apps.lab.local.

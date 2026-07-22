@@ -24,3 +24,9 @@
 
     - role: gitea
       tags: [git]
+
+    - role: nginx
+      tags: [ng]
+
+    - role: bind
+      tags: [bind]

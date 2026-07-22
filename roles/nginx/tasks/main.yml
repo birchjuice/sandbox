@@ -1,0 +1,35 @@
+- name: Install Nginx
+  apt:
+    name: nginx
+    state: present
+
+- name: Configure Nginx
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify: Reload Nginx
+
+- name: Configure Gitea site
+  template:
+    src: gitea.conf.j2
+    dest: /etc/nginx/sites-available/gitea.conf
+  notify: Reload Nginx
+
+- name: Remove default Nginx site
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: Reload Nginx
+
+- name: Enable Gitea site
+  file:
+    src: /etc/nginx/sites-available/gitea.conf
+    dest: /etc/nginx/sites-enabled/gitea.conf
+    state: link
+  notify: Reload Nginx
+
+- name: Enable and start Nginx
+  service:
+    name: nginx
+    state: started
+    enabled: true
