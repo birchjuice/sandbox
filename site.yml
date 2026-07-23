@@ -1,5 +1,5 @@
 - name: Configure sandbox
-  hosts: test01
+  hosts: linux01
   become: true
   gather_facts: true
   

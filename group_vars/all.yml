@@ -73,5 +73,5 @@ domain_directory_ownership:
   - path: /company/it
     group: 'LAB\gg_it'
 
-bind_server_name: test01
-bind_server_ip: 192.168.10.16
+bind_server_name: linux01
+bind_server_ip: 192.168.10.15

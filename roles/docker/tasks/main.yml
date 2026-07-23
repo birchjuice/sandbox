@@ -1,27 +1,3 @@
-- name: Remove conflicting packages
-  apt:
-    name:
-      - docker.io
-      - docker-compose
-      - docker-compose-v2
-      - podman-docker
-      - containerd
-      - runc
-    state: absent
-
-- name: Install Docker prerequisites
-  apt:
-    name:
-      - ca-certificates
-      - gnupg
-    state: present
-
-- name: Create apt keyrings directory
-  file:
-    path: /etc/apt/keyrings
-    state: directory
-    mode: '0755'
-
 - name: Download Docker GPG key
   get_url:
     url: https://download.docker.com/linux/ubuntu/gpg
@@ -38,6 +14,10 @@
     architectures: amd64
     signed_by: /etc/apt/keyrings/docker.asc
 
+- name: Update apt cache
+  apt:
+    update_cache: true
+
 - name: Install Docker Engine
   apt:
     name:
@@ -47,6 +27,14 @@
       - docker-compose-plugin
       - containerd.io
     state: present
+
+- name: Create Docker directory
+  file:
+    path: /etc/docker
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
 
 - name: Configure Docker daemon
   template:
