@@ -1,5 +1,5 @@
 [libdefaults]
-    default_realm = LAB.LOCAL
+    default_realm = {{ domain_name | upper }}
     dns_lookup_realm = false
     dns_lookup_kdc = true
     kdc_timesync = 1
@@ -9,10 +9,10 @@
     udp_preference_limit = 0
 
 [realms]
-    LAB.LOCAL = {
-        default_domain = lab.local
+    {{ domain_name | upper }} = {
+        default_domain = {{ domain_name }}
     }
 
 [domain_realm]
-    .lab.local = LAB.LOCAL
-    lab.local = LAB.LOCAL
+    .{{ domain_name }} = {{ domain_name | upper }}
+    {{ domain_name }} = {{ domain_name | upper }}

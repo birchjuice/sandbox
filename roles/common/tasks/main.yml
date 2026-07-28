@@ -1,6 +1,6 @@
 - name: Set timezone
   timezone:
-    name: "Europe/Tallinn"
+    name: '{{ timezone }}'
 
 - name: Update apt cache
   apt:
@@ -9,7 +9,7 @@
 
 - name: Install common packages
   package:
-    name: "{{ common_packages }}"
+    name: '{{ common_packages }}'
     state: present
 
 - name: Deploy MOTD

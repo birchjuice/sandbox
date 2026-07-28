@@ -1,0 +1,63 @@
+- name: Download grafana gpg key
+  get_url:
+    url: https://apt.grafana.com/gpg.key
+    dest: /etc/apt/keyrings/grafana.key
+    mode: '0644'
+
+- name: Add grafana repository
+  deb822_repository:
+    name: grafana
+    uris: https://apt.grafana.com
+    suites: stable
+    components: main
+    signed_by: /etc/apt/keyrings/grafana.key
+  notify: Update apt cache
+
+- name: Call handlers
+  meta: flush_handlers
+
+- name: Install grafana
+  apt:
+    name: grafana
+    state: present
+
+- name: Deploy grafana config
+  template:
+    src: grafana.ini.j2
+    dest: /etc/grafana/grafana.ini
+  notify: Restart grafana
+
+- name: Remove sample datasource
+  file:
+    path: /etc/grafana/provisioning/datasources/sample.yaml
+    state: absent
+  notify: Restart grafana
+
+- name: Deploy prometheus datasource
+  template:
+    src: prometheus.yml.j2
+    dest: /etc/grafana/provisioning/datasources/prometheus.yml
+  notify: Restart grafana
+
+- name: Create dashboards directory
+  file:
+    path: /var/lib/grafana/dashboards
+    state: directory
+
+- name: Deploy dashboards config
+  template:
+    src: dashboards.yml.j2
+    dest: /etc/grafana/provisioning/dashboards/dashboards.yml
+  notify: Restart grafana
+
+- name: Deploy main dashboard
+  copy:
+    src: main.json
+    dest: /var/lib/grafana/dashboards/main.json
+  notify: Restart grafana
+
+- name: Start grafana
+  service:
+    name: grafana-server
+    state: started
+    enabled: true

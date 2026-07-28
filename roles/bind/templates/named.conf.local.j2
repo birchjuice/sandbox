@@ -1,6 +1,6 @@
-zone "apps.lab.local" {
+zone "{{ apps_subdomain }}.{{ domain_name }}" {
     type master;
-    file "/etc/bind/db.apps.lab.local";
+    file "/etc/bind/db.{{ apps_subdomain }}.{{ domain_name }}";
 };
 
 zone "10.168.192.in-addr.arpa" {

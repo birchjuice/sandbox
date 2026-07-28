@@ -1,4 +1,4 @@
-- name: Restart Gitea
+- name: Restart gitea
   command: docker compose up -d
   args:
     chdir: /opt/gitea

@@ -29,4 +29,13 @@
       tags: [ng]
 
     - role: bind
-      tags: [bind]
+      tags: [bin]
+
+    - role: node_exporter
+      tags: [ne]
+
+    - role: prometheus
+      tags: [pr]
+
+    - role: grafana
+      tags: [gr]

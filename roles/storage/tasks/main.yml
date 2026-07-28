@@ -1,13 +1,13 @@
 - name: Create company groups
   group:
-    name: "{{ item.name }}"
+    name: '{{ item.name }}'
     state: present
-  loop: "{{ company_directories }}"
+  loop: '{{ company_directories }}'
 
 - name: Create company directories
   file:
-    path: "/company/{{ item.name }}"
+    path: /company/{{ item.name }}
     state: directory
     owner: root
-    mode: "{{ item.mode }}"
-  loop: "{{ company_directories }}"
+    mode: '{{ item.mode }}'
+  loop: '{{ company_directories }}'

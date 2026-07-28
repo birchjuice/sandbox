@@ -1,0 +1,27 @@
+server {
+    listen 8080;
+    server_name _;
+
+    location = /stub_status {
+        stub_status;
+    }
+}
+
+server {
+    listen 80 default_server;
+    server_name gitea.{{ apps_subdomain }}.{{ domain_name }};
+
+    location / {
+        proxy_pass http://localhost:{{ gitea_http_port }};
+    }
+}
+
+server {
+    listen 80;
+    server_name grafana.{{ apps_subdomain }}.{{ domain_name }};
+
+    location / {
+        proxy_pass http://localhost:{{ grafana_port }};
+        proxy_set_header Host $host;
+    }
+}

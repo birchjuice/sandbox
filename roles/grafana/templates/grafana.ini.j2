@@ -1,0 +1,8 @@
+[server]
+http_port = {{ grafana_port }}
+domain = grafana.{{ apps_subdomain }}.{{ domain_name }}
+root_url = http://grafana.{{ apps_subdomain }}.{{ domain_name }}
+
+[security]
+admin_user = {{ grafana_user }}
+admin_password = {{ grafana_password }}

@@ -1,10 +1,10 @@
-- name: Download Docker GPG key
+- name: Download docker gpg key
   get_url:
     url: https://download.docker.com/linux/ubuntu/gpg
     dest: /etc/apt/keyrings/docker.asc
     mode: '0644'
 
-- name: Add Docker repository
+- name: Add docker repository
   deb822_repository:
     name: docker
     types: deb
@@ -13,12 +13,12 @@
     components: stable
     architectures: amd64
     signed_by: /etc/apt/keyrings/docker.asc
+  notify: Update apt cache
 
-- name: Update apt cache
-  apt:
-    update_cache: true
+- name: Call handlers
+  meta: flush_handlers
 
-- name: Install Docker Engine
+- name: Install docker engine
   apt:
     name:
       - docker-ce
@@ -28,7 +28,7 @@
       - containerd.io
     state: present
 
-- name: Create Docker directory
+- name: Create docker directory
   file:
     path: /etc/docker
     state: directory
@@ -36,23 +36,23 @@
     group: root
     mode: '0755'
 
-- name: Configure Docker daemon
+- name: Deploy docker daemon
   template:
     src: daemon.json.j2
     dest: /etc/docker/daemon.json
     owner: root
     group: root
     mode: '0644'
-  notify: Restart Docker
+  notify: Restart docker
 
-- name: Enable and start Docker
-  systemd:
+- name: Start docker
+  service:
     name: docker
-    enabled: true
     state: started
+    enabled: true
 
-- name: Add user to Docker group
+- name: Add user to docker group
   user:
-    name: alex
+    name: '{{ admin_user }}'
     groups: docker
     append: true

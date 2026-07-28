@@ -1,6 +1,6 @@
 - name: Install domain packages
   package:
-    name: "{{ domain_packages }}"
+    name: '{{ domain_packages }}'
     state: present
 
 - name: Check if domain is already joined
@@ -17,22 +17,22 @@
       lab.local
       -U {{ domain_admin_user }}
     responses:
-      'Password for .*:': "{{ domain_admin_password }}"
-  when: "'lab.local' not in realm_status.stdout"
+      'Password for .*:': '{{ domain_admin_password }}'
+  when: realm_status.stdout.find(domain_name) == -1
   no_log: true
 
 - name: Set directory ownership
   file:
-    path: "{{ item.path }}"
+    path: '{{ item.path }}'
     owner: root
-    group: "{{ item.group }}"
-  loop: "{{ domain_directory_ownership }}"
+    group: '{{ item.group }}'
+  loop: '{{ domain_directory_ownership }}'
 
 - name: Configure ACLs
   acl:
-    path: "{{ item.path }}"
-    entity: "{{ item.entity }}"
-    etype: "{{ item.etype }}"
-    permissions: "{{ item.permissions }}"
+    path: '{{ item.path }}'
+    entity: '{{ item.entity }}'
+    etype: '{{ item.etype }}'
+    permissions: '{{ item.permissions }}'
     state: present
-  loop: "{{ company_acls }}"
+  loop: '{{ company_acls }}'

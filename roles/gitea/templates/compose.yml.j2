@@ -1,9 +1,7 @@
 services:
   db:
-    image: mariadb:12
-    container_name: mariadb
-
-    restart: always
+    image: mariadb:{{ mariadb_version }}
+    restart: unless-stopped
 
     environment:
       - MYSQL_ROOT_PASSWORD={{ mariadb_password }}
@@ -15,8 +13,8 @@ services:
       - ./db:/var/lib/mysql
 
   server:
-    image: docker.gitea.com/gitea:1.27.0
-    container_name: gitea
+    image: docker.gitea.com/gitea:{{ gitea_version }}
+    restart: unless-stopped
 
     depends_on:
       - db
@@ -25,8 +23,8 @@ services:
       - USER_UID=1000
       - USER_GID=1000
 
-      - GITEA__server__DOMAIN=gitea.lab.local
-      - GITEA__server__ROOT_URL=http://gitea.lab.local/
+      - GITEA__server__DOMAIN=gitea.{{ domain_name }}
+      - GITEA__server__ROOT_URL=http://gitea.{{ domain_name }}/
 
       - GITEA__database__DB_TYPE=mysql
       - GITEA__database__HOST=db:3306
@@ -34,13 +32,26 @@ services:
       - GITEA__database__USER=gitea
       - GITEA__database__PASSWD={{ mariadb_password }}
 
-    restart: always
+      - GITEA__metrics__ENABLED=true
+
+    ports:
+      - {{ gitea_http_port }}:3000
+      - {{ gitea_ssh_port }}:22
 
     volumes:
       - ./data:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
 
+  cadvisor:
+    image: ghcr.io/google/cadvisor:{{ cadvisor_version }}
+    restart: unless-stopped
+
     ports:
-      - "3000:3000"
-      - "222:22"
+      - {{ cadvisor_port }}:8080
+
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker:/var/lib/docker:ro

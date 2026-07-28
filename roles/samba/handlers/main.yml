@@ -1,4 +1,4 @@
-- name: Restart Samba
+- name: Restart samba
   service:
     name: smbd
     state: restarted

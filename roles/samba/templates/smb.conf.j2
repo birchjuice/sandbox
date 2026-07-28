@@ -1,6 +1,6 @@
 [global]
-    workgroup = LAB
-    realm = LAB.LOCAL
+    workgroup = {{ domain_name.split('.')[0] | upper }}
+    realm = {{ domain_name | upper }}
 
     security = ADS
     server role = member server
@@ -15,8 +15,8 @@
     idmap config * : backend = tdb
     idmap config * : range = 10000-99999
 
-    idmap config LAB : backend = rid
-    idmap config LAB : range = 2000000-2999999
+    idmap config {{ domain_name.split('.')[0] | upper }} : backend = rid
+    idmap config {{ domain_name.split('.')[0] | upper }} : range = 2000000-2999999
 
     template shell = /bin/bash
     template homedir = /home/%U@%D
@@ -36,7 +36,7 @@
     path = /company/public
     browseable = yes
     read only = no
-    valid users = @LAB\gg_allemployees
+    valid users = @{{ domain_name.split('.')[0] | upper }}\gg_allemployees
 
 
 [HR]
@@ -44,7 +44,7 @@
     path = /company/hr
     browseable = yes
     read only = no
-    valid users = @LAB\gg_hr @LAB\gg_management
+    valid users = @{{ domain_name.split('.')[0] | upper }}\gg_hr @{{ domain_name.split('.')[0] | upper }}\gg_management
 
 
 [IT]
@@ -52,7 +52,7 @@
     path = /company/it
     browseable = yes
     read only = no
-    valid users = @LAB\gg_it
+    valid users = @{{ domain_name.split('.')[0] | upper }}\gg_it
 
 
 [MNGT]
@@ -60,4 +60,4 @@
     path = /company/mngt
     browseable = yes
     read only = no
-    valid users = @LAB\gg_management
+    valid users = @{{ domain_name.split('.')[0] | upper }}\gg_management

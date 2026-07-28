@@ -1,18 +1,18 @@
-- name: Install Samba packages
+- name: Install samba packages
   package:
     name: samba
     state: present
 
-- name: Configure Samba
+- name: Deploy samba config
   template:
     src: smb.conf.j2
     dest: /etc/samba/smb.conf
     owner: root
     group: root
     mode: '0644'
-  notify: Restart Samba
+  notify: Restart samba
 
-- name: Enable and start Samba
+- name: Start samba
   service:
     name: smbd
     state: started

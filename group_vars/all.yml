@@ -23,6 +23,15 @@ mariadb_password: !vault |
           3739316632373938310a633261633931386466343464653734303332663966613361323438633931
           6432
 
+grafana_user: grafana
+grafana_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          61653238343862316532663732313562316339616439386565656439653566333335386262346534
+          3263303632376439666665343839363761663537656337340a386630346231653265343935303962
+          38373136643462623966336137363034653563356461613864363064666534323063646431336564
+          6432383763346139610a356336333237313635326439613535633163623561393738636565616364
+          3231
+
 ansible_python_interpreter: /usr/bin/python3
 
 common_packages:
@@ -73,5 +82,24 @@ domain_directory_ownership:
   - path: /company/it
     group: 'LAB\gg_it'
 
+timezone: Europe/Tallinn
+admin_user: alex
+apps_subdomain: apps
+domain_name: lab.local
 bind_server_name: linux01
 bind_server_ip: 192.168.10.15
+
+gitea_version: 1.27.0
+mariadb_version: 12.3.2
+cadvisor_version: v0.60.5
+prometheus_version: 3.13.1
+node_exporter_version: 1.9.1
+
+grafana_port: 3000
+gitea_http_port: 3001
+gitea_ssh_port: 222
+cadvisor_port: 8081
+prometheus_port: 9090
+node_exporter_port: 9100
+bind_exporter_port: 9119
+nginx_exporter_port: 9113
