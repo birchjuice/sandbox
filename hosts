@@ -1,1 +1,1 @@
-linux01 ansible_user=alex ansible_host=10.234.10.16
+linux01 ansible_user=alex ansible_host=192.168.10.20

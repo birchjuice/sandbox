@@ -10,6 +10,12 @@
     state: directory
     mode: '0755'
 
+- name: Create mariadb directory
+  file:
+    path: /opt/gitea/db
+    state: directory
+    mode: '0755'
+
 - name: Deploy docker compose file
   template:
     src: compose.yml.j2
@@ -20,13 +26,32 @@
   notify: Restart gitea
 
 - name: Start gitea
-  command: docker compose up -d
-  args:
-    chdir: /opt/gitea
+  community.docker.docker_compose_v2:
+    project_src: /opt/gitea
+
+- name: Wait for Gitea
+  uri:
+    url: http://localhost:{{ gitea_http_port }}
+    status_code: 200
+  register: gitea_status
+  retries: 10
+  delay: 2
+  until: gitea_status.status == 200
+
+- name: Check if admin user exists
+  command: >
+    docker exec --user git gitea
+    gitea admin user list
+  register: gitea_users
   changed_when: false
 
-- name: Create mariadb directory
-  file:
-    path: /opt/gitea/db
-    state: directory
-    mode: '0755'
+- name: Create admin user
+  command: >
+    docker exec --user git gitea
+    gitea admin user create
+    --username {{ gitea_admin_user }}
+    --password {{ gitea_admin_password }}
+    --email {{ gitea_admin_email }}
+    --admin
+  when: gitea_users.stdout.find(gitea_admin_user) == -1
+  no_log: true

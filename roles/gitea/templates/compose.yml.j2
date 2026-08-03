@@ -1,19 +1,21 @@
 services:
   db:
     image: mariadb:{{ mariadb_version }}
+    container_name: mariadb
     restart: unless-stopped
 
     environment:
-      - MYSQL_ROOT_PASSWORD={{ mariadb_password }}
-      - MYSQL_USER=gitea
-      - MYSQL_PASSWORD={{ mariadb_password }}
-      - MYSQL_DATABASE=gitea
+      - MYSQL_ROOT_PASSWORD={{ mariadb_root_password }}
+      - MYSQL_USER={{ gitea_db_user }}
+      - MYSQL_PASSWORD={{ gitea_db_password }}
+      - MYSQL_DATABASE={{ gitea_db_name }}
 
     volumes:
       - ./db:/var/lib/mysql
 
   server:
     image: docker.gitea.com/gitea:{{ gitea_version }}
+    container_name: gitea
     restart: unless-stopped
 
     depends_on:
@@ -28,9 +30,11 @@ services:
 
       - GITEA__database__DB_TYPE=mysql
       - GITEA__database__HOST=db:3306
-      - GITEA__database__NAME=gitea
-      - GITEA__database__USER=gitea
-      - GITEA__database__PASSWD={{ mariadb_password }}
+      - GITEA__database__NAME={{ gitea_db_name }}
+      - GITEA__database__USER={{ gitea_db_user }}
+      - GITEA__database__PASSWD={{ gitea_db_password }}
+
+      - GITEA__security__INSTALL_LOCK=true
 
       - GITEA__metrics__ENABLED=true
 
@@ -45,6 +49,7 @@ services:
 
   cadvisor:
     image: ghcr.io/google/cadvisor:{{ cadvisor_version }}
+    container_name: cadvisor
     restart: unless-stopped
 
     ports:

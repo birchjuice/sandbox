@@ -7,4 +7,4 @@ $TTL    604800
                          604800 )       ; Negative Cache TTL
 ;
 @       IN      NS      ns1.{{ apps_subdomain }}.{{ domain_name }}.
-16      IN      PTR     {{ bind_server_name }}.{{ apps_subdomain }}.{{ domain_name }}.
+{{ ansible_host.split('.')[-1] }}  IN  PTR  {{ inventory_hostname }}.{{ apps_subdomain }}.{{ domain_name }}.

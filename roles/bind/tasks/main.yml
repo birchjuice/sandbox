@@ -35,7 +35,7 @@
   loop:
     - { src: db.apps.lab.local.j2, dest: db.apps.lab.local }
     - { src: db.192.168.10.j2, dest: db.192.168.10 }
-  notify: Restart Bind
+  notify: rndc reload
 
 - name: Call handlers
   meta: flush_handlers
