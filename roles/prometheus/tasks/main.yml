@@ -11,13 +11,14 @@
     shell: /usr/sbin/nologin
     create_home: false
 
-- name: Check if prometheus is installed
-  stat:
-    path: /usr/local/bin/prometheus
-  register: prometheus_binary
+- name: Check prometheus version
+  command: /usr/local/bin/prometheus --version
+  register: prometheus_installed
+  changed_when: false
+  failed_when: false
 
 - name: Install prometheus
-  when: not prometheus_binary.stat.exists
+  when: prometheus_installed.rc != 0 or prometheus_installed.stdout.find(prometheus_version) == -1
   block:
     - name: Download prometheus archive
       get_url:

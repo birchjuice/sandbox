@@ -68,11 +68,12 @@ domain_packages:
   - winbind
   - libnss-winbind
   - libpam-winbind
+  - python3-pexpect
   - packagekit
 
 company_directories:
   - name: public
-    mode: '0555'
+    mode: '0750'
 
   - name: mngt
     mode: '2770'
@@ -89,7 +90,7 @@ company_acls:
     etype: group
     permissions: rx
 
-domain_directory_ownership:
+company_directory_ownership:
   - path: /company/public
     group: 'LAB\gg_allemployees'
 

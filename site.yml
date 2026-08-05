@@ -5,10 +5,7 @@
   
   roles:
     - role: common
-      tags: [c]
-
-    - role: storage
-      tags: [st]
+      tags: [com]
 
     - role: domain
       tags: [dom]

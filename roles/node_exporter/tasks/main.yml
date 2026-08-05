@@ -11,13 +11,14 @@
     shell: /usr/sbin/nologin
     create_home: false
 
-- name: Check if node exporter is installed
-  stat:
-    path: /usr/local/bin/node_exporter
-  register: node_exporter_binary
+- name: Check node exporter version
+  command: /usr/local/bin/node_exporter --version
+  register: node_exporter_installed
+  changed_when: false
+  failed_when: false
 
 - name: Install node exporter
-  when: not node_exporter_binary.stat.exists
+  when: node_exporter_installed.rc != 0 or node_exporter_installed.stdout.find(node_exporter_version) == -1
   block:
     - name: Download node exporter archive
       get_url:

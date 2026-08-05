@@ -22,7 +22,7 @@
     dest: /opt/gitea/compose.yml
     owner: root
     group: root
-    mode: '0644'
+    mode: '0600'
   notify: Restart gitea
 
 - name: Start gitea

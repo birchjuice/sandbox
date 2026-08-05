@@ -3,6 +3,29 @@
     name: samba
     state: present
 
+- name: Create company directories
+  file:
+    path: /company/{{ item.name }}
+    state: directory
+    mode: '{{ item.mode }}'
+  loop: '{{ company_directories }}'
+
+- name: Set company directory ownership
+  file:
+    path: '{{ item.path }}'
+    owner: root
+    group: '{{ item.group }}'
+  loop: '{{ company_directory_ownership }}'
+
+- name: Deploy company ACLs
+  acl:
+    path: '{{ item.path }}'
+    entity: '{{ item.entity }}'
+    etype: '{{ item.etype }}'
+    permissions: '{{ item.permissions }}'
+    state: present
+  loop: '{{ company_acls }}'
+
 - name: Deploy samba config
   template:
     src: smb.conf.j2
@@ -10,10 +33,15 @@
     owner: root
     group: root
     mode: '0644'
-  notify: Restart samba
+  notify:
+    - Restart samba
+    - Restart winbind
 
-- name: Start samba
+- name: Start samba services
   service:
-    name: smbd
+    name: '{{ item }}'
     state: started
     enabled: true
+  loop:
+    - smbd
+    - winbind
