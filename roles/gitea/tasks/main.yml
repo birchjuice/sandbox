@@ -26,15 +26,17 @@
   notify: Restart gitea
 
 - name: Start gitea
-  community.docker.docker_compose_v2:
-    project_src: /opt/gitea
+  command: docker compose up -d
+  args:
+    chdir: /opt/gitea
+  changed_when: false
 
 - name: Wait for Gitea
   uri:
     url: http://localhost:{{ gitea_http_port }}
     status_code: 200
   register: gitea_status
-  retries: 10
+  retries: 30
   delay: 2
   until: gitea_status.status == 200
 

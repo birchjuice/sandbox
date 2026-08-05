@@ -10,14 +10,14 @@
     - role: storage
       tags: [st]
 
-    - role: kerberos
-      tags: [ker]
-
     - role: domain
       tags: [dom]
 
     - role: samba
       tags: [sam]
+
+    - role: kerberos
+      tags: [ker]
 
     - role: docker
       tags: [doc]

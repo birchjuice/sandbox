@@ -1,3 +1,11 @@
+- name: Create keyrings directory
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
 - name: Download docker gpg key
   get_url:
     url: https://download.docker.com/linux/ubuntu/gpg

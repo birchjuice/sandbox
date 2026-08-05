@@ -25,8 +25,8 @@ services:
       - USER_UID=1000
       - USER_GID=1000
 
-      - GITEA__server__DOMAIN=gitea.{{ domain_name }}
-      - GITEA__server__ROOT_URL=http://gitea.{{ domain_name }}/
+      - GITEA__server__DOMAIN=gitea.{{ apps_subdomain }}.{{ domain_name }}
+      - GITEA__server__ROOT_URL=http://gitea.{{ apps_subdomain }}.{{ domain_name }}/
 
       - GITEA__database__DB_TYPE=mysql
       - GITEA__database__HOST=db:3306
@@ -39,7 +39,7 @@ services:
       - GITEA__metrics__ENABLED=true
 
     ports:
-      - {{ gitea_http_port }}:3000
+      - 127.0.0.1:{{ gitea_http_port }}:3000
       - {{ gitea_ssh_port }}:22
 
     volumes:

@@ -13,6 +13,7 @@ server {
 
     location / {
         proxy_pass http://localhost:{{ gitea_http_port }};
+        proxy_set_header Host $host;
     }
 }
 
