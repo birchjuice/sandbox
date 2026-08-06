@@ -3,6 +3,14 @@
     name: samba
     state: present
 
+- name: Create company root directory
+  file:
+    path: /company
+    state: directory
+    owner: root
+    group: root
+    mode: '0711'
+
 - name: Create company directories
   file:
     path: /company/{{ item.name }}
