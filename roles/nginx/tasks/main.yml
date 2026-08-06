@@ -5,6 +5,33 @@
       - prometheus-nginx-exporter
     state: present
 
+- name: Create nginx TLS directory
+  file:
+    path: /etc/nginx/tls
+    state: directory
+    owner: root
+    group: root
+    mode: '0700'
+
+- name: Deploy TLS certificate
+  copy:
+    src: apps.crt
+    dest: /etc/nginx/tls/apps.crt
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart nginx
+
+- name: Deploy TLS key
+  copy:
+    content: '{{ nginx_tls_key }}'
+    dest: /etc/nginx/tls/apps.key
+    owner: root
+    group: root
+    mode: '0600'
+  no_log: true
+  notify: Restart nginx
+
 - name: Deploy nginx config
   template:
     src: default.j2

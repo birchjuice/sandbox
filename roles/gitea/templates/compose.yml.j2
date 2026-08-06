@@ -26,7 +26,7 @@ services:
       - USER_GID=1000
 
       - GITEA__server__DOMAIN=gitea.{{ apps_subdomain }}.{{ domain_name }}
-      - GITEA__server__ROOT_URL=http://gitea.{{ apps_subdomain }}.{{ domain_name }}/
+      - GITEA__server__ROOT_URL=https://gitea.{{ apps_subdomain }}.{{ domain_name }}/
 
       - GITEA__database__DB_TYPE=mysql
       - GITEA__database__HOST=db:3306
