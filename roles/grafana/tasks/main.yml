@@ -29,6 +29,20 @@
     name: grafana
     state: present
 
+- name: Deploy LAB Root CA certificate
+  copy:
+    src: lab-root-ca.crt
+    dest: /usr/local/share/ca-certificates/lab-root-ca.crt
+    owner: root
+    group: root
+    mode: '0644'
+  register: grafana_root_ca
+  notify: Restart grafana
+
+- name: Update system CA certificates
+  command: update-ca-certificates
+  when: grafana_root_ca.changed
+
 - name: Deploy grafana config
   template:
     src: grafana.ini.j2

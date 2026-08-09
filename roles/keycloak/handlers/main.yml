@@ -1,0 +1,4 @@
+- name: Restart keycloak
+  command: docker compose up -d
+  args:
+    chdir: /opt/keycloak

@@ -53,3 +53,21 @@ server {
         proxy_set_header X-Forwarded-Proto https;
     }
 }
+
+server {
+    listen 443 ssl;
+    server_name auth.{{ apps_subdomain }}.{{ domain_name }};
+
+    ssl_certificate /etc/nginx/tls/apps.crt;
+    ssl_certificate_key /etc/nginx/tls/apps.key;
+
+    location / {
+        proxy_pass http://127.0.0.1:{{ keycloak_http_port }};
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Port 443;
+    }
+}

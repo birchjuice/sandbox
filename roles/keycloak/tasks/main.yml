@@ -1,0 +1,78 @@
+- name: Create keycloak directory
+  file:
+    path: /opt/keycloak
+    state: directory
+    mode: '0755'
+
+- name: Create truststore directory
+  file:
+    path: /opt/keycloak/truststore
+    state: directory
+    mode: '0755'
+
+- name: Create vault directory
+  file:
+    path: /opt/keycloak/vault
+    state: directory
+    mode: '0755'
+
+- name: Create realm import directory
+  file:
+    path: /opt/keycloak/realm-import
+    state: directory
+    owner: root
+    group: root
+    mode: '0750'
+
+- name: Deploy keycloak ldap bind password
+  copy:
+    content: '{{ keycloak_ldap_bind_password }}'
+    dest: /opt/keycloak/vault/{{ keycloak_realm_name }}_ldap__bind__password
+    owner: root
+    group: root
+    mode: '0440'
+  no_log: true
+  notify: Restart keycloak
+
+- name: Deploy LAB Root CA certificate
+  copy:
+    src: lab-root-ca.crt
+    dest: /opt/keycloak/truststore/lab-root-ca.crt
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart keycloak
+
+- name: Deploy docker compose file
+  template:
+    src: compose.yml.j2
+    dest: /opt/keycloak/compose.yml
+    owner: root
+    group: root
+    mode: '0600'
+  notify: Restart keycloak
+
+- name: Deploy lab realm config
+  template:
+    src: lab-realm.json.j2
+    dest: /opt/keycloak/realm-import/lab-realm.json
+    owner: root
+    group: root
+    mode: '0640'
+  no_log: true
+  notify: Restart keycloak
+
+- name: Start keycloak
+  command: docker compose up -d
+  args:
+    chdir: /opt/keycloak
+  changed_when: false
+
+- name: Wait for keycloak
+  uri:
+    url: http://127.0.0.1:{{ keycloak_http_port }}/realms/master
+    status_code: 200
+  register: keycloak_status
+  retries: 30
+  delay: 2
+  until: keycloak_status.status == 200

@@ -1,6 +1,6 @@
 $TTL    604800
 @       IN      SOA     ns1.{{ apps_subdomain }}.{{ domain_name }}.  admin.{{ apps_subdomain }}.{{ domain_name }}. (
-                              2         ; Serial
+                              3         ; Serial
                          604800         ; Refresh
                           86400         ; Retry
                         2419200         ; Expire
@@ -11,3 +11,4 @@ ns1     IN      A       {{ ansible_host }}
 {{ inventory_hostname }}  IN  A  {{ ansible_host }}
 gitea   IN      CNAME   {{ inventory_hostname }}.{{ apps_subdomain }}.{{ domain_name }}.
 grafana IN      CNAME   {{ inventory_hostname }}.{{ apps_subdomain }}.{{ domain_name }}.
+auth    IN      CNAME   {{ inventory_hostname }}.{{ apps_subdomain }}.{{ domain_name }}.

@@ -1,0 +1,7 @@
+FROM gitea/gitea:{{ gitea_version }}
+
+USER root
+
+COPY lab-root-ca.crt /usr/local/share/ca-certificates/lab-root-ca.crt
+
+RUN update-ca-certificates

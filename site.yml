@@ -22,6 +22,9 @@
     - role: gitea
       tags: [git]
 
+    - role: keycloak
+      tags: [key]
+
     - role: nginx
       tags: [ng]
 

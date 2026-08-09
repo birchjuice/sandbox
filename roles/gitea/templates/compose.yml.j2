@@ -14,7 +14,11 @@ services:
       - ./db:/var/lib/mysql
 
   server:
-    image: docker.gitea.com/gitea:{{ gitea_version }}
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    image: gitea/gitea-lab:{{ gitea_version }}
     container_name: gitea
     restart: unless-stopped
 
@@ -37,6 +41,8 @@ services:
       - GITEA__security__INSTALL_LOCK=true
 
       - GITEA__metrics__ENABLED=true
+
+      - GITEA__oauth2_client__ENABLE_AUTO_REGISTRATION=true
 
     ports:
       - 127.0.0.1:{{ gitea_http_port }}:3000
