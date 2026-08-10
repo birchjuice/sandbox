@@ -4,22 +4,22 @@
   "metadata": {
     "name": "adhjxnt",
     "namespace": "default",
-    "uid": "240dd377-0e33-430d-a4c2-a09ffc133a39",
-    "resourceVersion": "1785148042918011",
-    "generation": 6,
-    "creationTimestamp": "2026-07-24T13:19:53Z",
+    "uid": "89b8277f-7844-4efe-9646-f83caaf6e73e",
+    "resourceVersion": "1786372500973007",
+    "generation": 2,
+    "creationTimestamp": "2026-08-09T23:54:12Z",
     "labels": {
-      "grafana.app/deprecatedInternalID": "4480664649224192"
+      "grafana.app/deprecatedInternalID": "1435348838801408"
     },
     "annotations": {
-      "grafana.app/createdBy": "user:cft243518sjy8e",
+      "grafana.app/createdBy": "access-policy:service",
       "grafana.app/managedBy": "classic-file-provisioning",
       "grafana.app/managerId": "Default",
-      "grafana.app/sourceChecksum": "e25d607963f0013620426040c83d6c5d",
+      "grafana.app/sourceChecksum": "2f2244615315b5081164b7bb3a94b912",
       "grafana.app/sourcePath": "/var/lib/grafana/dashboards/main.json",
-      "grafana.app/sourceTimestamp": "1785148040000",
+      "grafana.app/sourceTimestamp": "1786372498000",
       "grafana.app/updatedBy": "access-policy:service",
-      "grafana.app/updatedTimestamp": "2026-07-27T10:27:22Z",
+      "grafana.app/updatedTimestamp": "2026-08-10T14:35:00Z",
       "grafana.app/folder": ""
     }
   },
@@ -124,7 +124,7 @@
                 "overrides": []
               },
               "options": {
-                "colorMode": "value",
+                "colorMode": "background",
                 "graphMode": "none",
                 "justifyMode": "auto",
                 "orientation": "auto",
@@ -225,7 +225,7 @@
                 "overrides": []
               },
               "options": {
-                "colorMode": "value",
+                "colorMode": "background",
                 "graphMode": "none",
                 "justifyMode": "auto",
                 "orientation": "auto",
@@ -240,106 +240,6 @@
                 "showPercentChange": false,
                 "textMode": "auto",
                 "wideLayout": true
-              }
-            },
-            "version": "13.1.1"
-          }
-        }
-      },
-      "panel-3": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "hidden": false,
-                    "query": {
-                      "datasource": {
-                        "name": "PBFA97CFB590B2093"
-                      },
-                      "group": "prometheus",
-                      "kind": "DataQuery",
-                      "spec": {
-                        "editorMode": "code",
-                        "expr": "clamp_min((1 - (node_memory_MemAvailable_bytes{job=\"node\"} / node_memory_MemTotal_bytes{job=\"node\"})) * 100, 0)",
-                        "legendFormat": "__auto",
-                        "range": true
-                      },
-                      "version": "v0"
-                    },
-                    "refId": "A"
-                  }
-                }
-              ],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 3,
-          "links": [],
-          "title": "RAM usage",
-          "vizConfig": {
-            "group": "gauge",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "thresholds": {
-                    "mode": "percentage",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": 0
-                      },
-                      {
-                        "color": "#EAB839",
-                        "value": 60
-                      },
-                      {
-                        "color": "red",
-                        "value": 80
-                      }
-                    ]
-                  },
-                  "unit": "percent"
-                },
-                "overrides": []
-              },
-              "options": {
-                "barShape": "flat",
-                "barWidthFactor": 0.5,
-                "effects": {
-                  "barGlow": false,
-                  "centerGlow": false,
-                  "gradient": true
-                },
-                "endpointMarker": "point",
-                "minVizHeight": 75,
-                "minVizWidth": 75,
-                "orientation": "auto",
-                "reduceOptions": {
-                  "calcs": [
-                    "lastNotNull"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "segmentCount": 1,
-                "segmentSpacing": 0.3,
-                "shape": "gauge",
-                "showThresholdLabels": false,
-                "showThresholdMarkers": true,
-                "sizing": "auto",
-                "sparkline": false,
-                "textMode": "auto"
               }
             },
             "version": "13.1.1"
@@ -512,7 +412,7 @@
                 "overrides": []
               },
               "options": {
-                "colorMode": "value",
+                "colorMode": "background",
                 "graphMode": "none",
                 "justifyMode": "auto",
                 "orientation": "auto",
@@ -606,6 +506,7 @@
                     "lastNotNull"
                   ],
                   "fields": "",
+                  "limit": 1,
                   "values": false
                 },
                 "showPercentChange": false,
@@ -617,7 +518,7 @@
           }
         }
       },
-      "panel-7": {
+      "panel-8": {
         "kind": "Panel",
         "spec": {
           "data": {
@@ -636,7 +537,105 @@
                       "kind": "DataQuery",
                       "spec": {
                         "editorMode": "code",
-                        "expr": "up{job=\"gitea\"}",
+                        "expr": "up{job=\"windows\"}",
+                        "legendFormat": "{{instance}}",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 8,
+          "links": [],
+          "title": "Windows Hosts",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "#ad46ff",
+                    "mode": "thresholds"
+                  },
+                  "mappings": [
+                    {
+                      "options": {
+                        "0": {
+                          "color": "red",
+                          "index": 1,
+                          "text": "DOWN"
+                        },
+                        "1": {
+                          "color": "green",
+                          "index": 0,
+                          "text": "UP"
+                        }
+                      },
+                      "type": "value"
+                    }
+                  ],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "background",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              }
+            },
+            "version": "13.1.1"
+          }
+        }
+      },
+      "panel-9": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "PBFA97CFB590B2093"
+                      },
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "expr": "up{job=\"keycloak\"}",
                         "legendFormat": "__auto",
                         "range": true
                       },
@@ -651,9 +650,9 @@
             }
           },
           "description": "",
-          "id": 7,
+          "id": 9,
           "links": [],
-          "title": "Gitea",
+          "title": "Keycloak",
           "vizConfig": {
             "group": "stat",
             "kind": "VizConfig",
@@ -697,7 +696,7 @@
                 "overrides": []
               },
               "options": {
-                "colorMode": "value",
+                "colorMode": "background",
                 "graphMode": "none",
                 "justifyMode": "auto",
                 "orientation": "auto",
@@ -741,7 +740,7 @@
             "spec": {
               "element": {
                 "kind": "ElementReference",
-                "name": "panel-3"
+                "name": "panel-6"
               },
               "height": 4,
               "width": 3,
@@ -754,9 +753,9 @@
             "spec": {
               "element": {
                 "kind": "ElementReference",
-                "name": "panel-1"
+                "name": "panel-8"
               },
-              "height": 4,
+              "height": 12,
               "width": 3,
               "x": 6,
               "y": 0
@@ -767,25 +766,12 @@
             "spec": {
               "element": {
                 "kind": "ElementReference",
-                "name": "panel-2"
+                "name": "panel-9"
               },
               "height": 4,
               "width": 3,
-              "x": 9,
-              "y": 0
-            }
-          },
-          {
-            "kind": "GridLayoutItem",
-            "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-7"
-              },
-              "height": 4,
-              "width": 3,
-              "x": 12,
-              "y": 0
+              "x": 0,
+              "y": 4
             }
           },
           {
@@ -797,8 +783,8 @@
               },
               "height": 4,
               "width": 3,
-              "x": 15,
-              "y": 0
+              "x": 3,
+              "y": 4
             }
           },
           {
@@ -806,12 +792,25 @@
             "spec": {
               "element": {
                 "kind": "ElementReference",
-                "name": "panel-6"
+                "name": "panel-2"
               },
               "height": 4,
               "width": 3,
-              "x": 18,
-              "y": 0
+              "x": 0,
+              "y": 8
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-1"
+              },
+              "height": 4,
+              "width": 3,
+              "x": 3,
+              "y": 8
             }
           }
         ]

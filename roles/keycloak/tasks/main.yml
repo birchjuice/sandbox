@@ -70,7 +70,7 @@
 
 - name: Wait for keycloak
   uri:
-    url: http://127.0.0.1:{{ keycloak_http_port }}/realms/master
+    url: http://127.0.0.1:{{ keycloak_port }}/realms/master
     status_code: 200
   register: keycloak_status
   retries: 30

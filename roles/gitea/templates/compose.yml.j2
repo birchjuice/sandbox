@@ -51,8 +51,10 @@ services:
 
       - GITEA__oauth2_client__ENABLE_AUTO_REGISTRATION=true
 
+      - GITEA__service__REQUIRE_SIGNIN_VIEW=true
+
     ports:
-      - 127.0.0.1:{{ gitea_http_port }}:3000
+      - 127.0.0.1:{{ gitea_port }}:3000
       - {{ gitea_ssh_port }}:22
 
     volumes:

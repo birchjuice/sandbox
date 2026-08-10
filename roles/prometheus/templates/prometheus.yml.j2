@@ -25,9 +25,21 @@ scrape_configs:
   - job_name: gitea
     static_configs:
       - targets:
-          - localhost:{{ gitea_http_port }}
+          - localhost:{{ gitea_port }}
 
   - job_name: docker
     static_configs:
       - targets:
           - localhost:{{ cadvisor_port }}
+
+  - job_name: keycloak
+    static_configs:
+      - targets:
+          - localhost:{{ keycloak_metrics_port }}
+
+  - job_name: windows
+    static_configs:
+      - targets:
+          - dc01.lab.local:{{ windows_exporter_port }}
+          - file01.lab.local:{{ windows_exporter_port }}
+          - client01.lab.local:{{ windows_exporter_port }}

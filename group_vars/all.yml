@@ -64,14 +64,16 @@ keycloak_version: 26.7.0
 postgres_version: '17'
 
 grafana_port: 3000
-gitea_http_port: 3001
+gitea_port: 3001
 gitea_ssh_port: 222
 cadvisor_port: 8081
+keycloak_port: 8082
+keycloak_metrics_port: 9000
 prometheus_port: 9090
 node_exporter_port: 9100
-bind_exporter_port: 9119
 nginx_exporter_port: 9113
-keycloak_http_port: 8082
+bind_exporter_port: 9119
+windows_exporter_port: 9182
 
 ansible_become_password: !vault |
           $ANSIBLE_VAULT;1.1;AES256

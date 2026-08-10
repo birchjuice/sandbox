@@ -45,8 +45,11 @@ services:
       KC_VAULT: file
       KC_VAULT_DIR: /opt/keycloak/conf/vault
 
+      KC_METRICS_ENABLED: 'true'
+
     ports:
-      - 127.0.0.1:{{ keycloak_http_port }}:8080
+      - 127.0.0.1:{{ keycloak_port }}:8080
+      - 127.0.0.1:{{ keycloak_metrics_port }}:{{ keycloak_metrics_port }}
 
     volumes:
       - ./truststore:/opt/keycloak/conf/truststores:ro

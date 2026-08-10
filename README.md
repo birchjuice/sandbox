@@ -8,7 +8,7 @@ Provision **LINUX01** from a clean Ubuntu Server installation using Ansible, res
 
 ## Features
 
-* AD integration
+* Active Directory integration
 * Samba file server
 * Docker
 * BIND DNS
@@ -23,15 +23,14 @@ Provision **LINUX01** from a clean Ubuntu Server installation using Ansible, res
 ### General
 
 * Each service has a clear owning role.
-* Prefer short Ansible module names.
-* Prefer single quotes over double quotes.
+* Prefer short module names and single quotes over double quotes.
 * Keep tasks simple and readable; avoid unnecessary abstraction.
 
 ### Variables
 
 * Store configurable values in `group_vars`.
 * Store passwords and secrets in `group_vars` encrypted with Ansible Vault.
-* Configurable service ports are variables.
+* Configurable service ports are defined as variables.
 
 ### Networking
 
@@ -39,13 +38,8 @@ Provision **LINUX01** from a clean Ubuntu Server installation using Ansible, res
 * Infrastructure IP addresses are defined in `group_vars`.
 * DNS configuration belongs in the `bind` role.
 
-### Monitoring
-
-* Monitoring configuration lives with the monitored service.
-* Prometheus scrape jobs live in the Prometheus role.
-* Grafana dashboards are provisioned and stored in Git.
-
 ### Idempotency
 
 * Tasks should be idempotent whenever practical.
 * Use handlers instead of unnecessary service restarts.
+* A second playbook run should complete with zero changes.
