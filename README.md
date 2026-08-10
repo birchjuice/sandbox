@@ -4,55 +4,48 @@ Infrastructure as Code for my Windows/Linux lab.
 
 ## Goal
 
-Provision **LINUX01** from a clean Ubuntu Server installation using Ansible, resulting in a fully configured domain member with all infrastructure services deployed automatically.
+Provision **LINUX01** from a clean Ubuntu Server installation using Ansible, resulting in a fully configured Active Directory domain member with file sharing, monitoring, internal DNS and TLS, and SSO services deployed automatically.
 
 ## Features
 
-- Active Directory domain integration
-- Samba file server
-- Docker
-- MariaDB
-- Gitea
-- Nginx reverse proxy
-- BIND DNS
-- Prometheus monitoring
-- Grafana dashboards
+* AD integration
+* Samba file server
+* Docker
+* BIND DNS
+* Keycloak SSO
+* Nginx HTTPS reverse proxy
+* Gitea
+* Grafana
+* Prometheus
 
+## Repository Conventions
 
-# Repository Conventions
+### General
 
-## General
+* Each service has a clear owning role.
+* Prefer short Ansible module names.
+* Prefer single quotes over double quotes.
+* Keep tasks simple and readable; avoid unnecessary abstraction.
 
-- One role owns one service.
-- Prefer short Ansible module names (no FQCNs).
-- Prefer single quotes over double quotes.
-- Keep tasks simple and readable; avoid unnecessary abstraction.
+### Variables
 
-## Variables
+* Store configurable values in `group_vars`.
+* Store passwords and secrets in `group_vars` encrypted with Ansible Vault.
+* Configurable service ports are variables.
 
-- Store all configurable values in `group_vars`.
-- Passwords and secrets are stored in `group_vars` and encrypted with Ansible Vault.
-- Service ports are always variables.
-- If a value is expected to change, make it a variable.
+### Networking
 
-## Networking
+* Avoid hardcoded IP addresses when a hostname or `localhost` can be used.
+* Infrastructure IP addresses are defined in `group_vars`.
+* DNS configuration belongs in the `bind` role.
 
-- Avoid hardcoded IP addresses whenever a hostname or `localhost` can be used.
-- Infrastructure IP addresses belong only in `group_vars`.
-- DNS records and similar IP-specific configuration belong in the `bind` role.
+### Monitoring
 
-## Templates
+* Monitoring configuration lives with the monitored service.
+* Prometheus scrape jobs live in the Prometheus role.
+* Grafana dashboards are provisioned and stored in Git.
 
-- Prefer one well-structured template over many tiny templates when it improves readability.
-- Keep templates focused on configuration rather than business logic.
+### Idempotency
 
-## Monitoring
-
-- Monitoring configuration lives with the monitored service.
-- Prometheus scrape jobs live in the Prometheus role.
-- Grafana dashboards are provisioned and stored in Git.
-
-## Idempotency
-
-- Tasks should be idempotent whenever practical.
-- Use handlers instead of unnecessary service restarts.
+* Tasks should be idempotent whenever practical.
+* Use handlers instead of unnecessary service restarts.

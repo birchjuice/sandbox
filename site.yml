@@ -19,8 +19,8 @@
     - role: docker
       tags: [doc]
 
-    - role: gitea
-      tags: [git]
+    - role: bind
+      tags: [bin]
 
     - role: keycloak
       tags: [key]
@@ -28,8 +28,8 @@
     - role: nginx
       tags: [ng]
 
-    - role: bind
-      tags: [bin]
+    - role: gitea
+      tags: [git]
 
     - role: node_exporter
       tags: [ne]

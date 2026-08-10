@@ -4,6 +4,12 @@ services:
     container_name: mariadb
     restart: unless-stopped
 
+    healthcheck:
+      test: ['CMD-SHELL', 'mariadb --protocol=tcp -h localhost -u root -p"$$MYSQL_ROOT_PASSWORD" -e "SELECT 1"']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
     environment:
       - MYSQL_ROOT_PASSWORD={{ mariadb_root_password }}
       - MYSQL_USER={{ gitea_db_user }}
@@ -14,16 +20,17 @@ services:
       - ./db:/var/lib/mysql
 
   server:
-    build:
-      context: .
-      dockerfile: Dockerfile
-
     image: gitea/gitea-lab:{{ gitea_version }}
     container_name: gitea
     restart: unless-stopped
 
+    build:
+      context: .
+      dockerfile: Dockerfile
+
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
     environment:
       - USER_UID=1000

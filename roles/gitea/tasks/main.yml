@@ -55,21 +55,15 @@
     chdir: /opt/gitea
   changed_when: false
 
-- name: Wait for gitea
-  uri:
-    url: http://localhost:{{ gitea_http_port }}
-    status_code: 200
-  register: gitea_status
-  retries: 30
-  delay: 2
-  until: gitea_status.status == 200
-
-- name: Check if admin user exists
+- name: Wait for gitea database
   command: >
     docker exec --user git gitea
     gitea admin user list
   register: gitea_users
   changed_when: false
+  retries: 30
+  delay: 2
+  until: gitea_users.rc == 0
 
 - name: Create admin user
   command: >
